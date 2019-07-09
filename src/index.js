@@ -18,6 +18,8 @@ import engagementsApi from './entities/engagements';
 import oauthApi from './entities/oauth';
 import contactsListsApi from './entities/contacts-lists';
 import emailSubscriptionsApi from './entities/email-subscriptions';
+import associationsApi from './entities/associations';
+
 /**
 * HubSpotClient class
 * @example
@@ -195,6 +197,14 @@ class HubSpotClient {
    */
   get emailSubscriptions() {
     return emailSubscriptionsApi(this.props);
+  }
+
+   /**
+   * A collection of methods related to the CRM associations API
+   * @namespace hs/associations
+   */
+  get associations() {
+    return associationsApi(this.props);
   }
 
 

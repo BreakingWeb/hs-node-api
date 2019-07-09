@@ -153,6 +153,9 @@ export default {
       create: `${defaultApiHost}/url-mappings/v3/url-mappings`,
       update: `${defaultApiHost}/url-mappings/v3/url-mappings/{id}`,
       delete: `${defaultApiHost}/url-mappings/v3/url-mappings/{id}`
+    },
+    associations: {
+      byId: `${defaultApiHost}/crm-associations/v1/associations/{objectId}/HUBSPOT_DEFINED/{definitionId}`,
     }
   }
 };
