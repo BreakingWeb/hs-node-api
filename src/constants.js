@@ -156,6 +156,9 @@ export default {
     },
     associations: {
       byId: `${defaultApiHost}/crm-associations/v1/associations/{objectId}/HUBSPOT_DEFINED/{definitionId}`,
-    }
+    },
+    objects: {
+      getLineItemByIds: `${defaultApiHost}/crm-objects/v1/objects/line_items/batch-read`,
+    },
   }
 };
