@@ -24,6 +24,24 @@ const getById = async (vid, options = {}) => {
   }
 };
 
+const getByIds = async (ids, options = {}) => {
+  try {
+    requiresAuthentication(_baseOptions);
+
+    const mergedProps = Object.assign({}, defaults, _baseOptions, options);
+    mergedProps.vid = ids;
+
+    const allContacts = await createRequest(
+      constants.api.contacts.byIds,
+      {},
+      mergedProps
+    );
+    return Promise.resolve(allContacts);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 const getByEmail = async (email, options) => {
   try {
     requiresAuthentication(_baseOptions);
@@ -228,6 +246,20 @@ export default function contacts(baseOptions) {
      * @returns {Promise}
      */
     getById,
+
+    /**
+     * Get contacts by IDs
+     * @async
+     * @memberof hs/contacts
+     * @method getByIds
+     * @param {array} vid The vids of the contacts to retrieve
+     * @param {object} properties Optional extra properties to add to the request - see {@link https://developers.hubspot.com/docs/methods/contacts/get_contact|developer docs}
+     * @example
+     * const hs = new HubspotClient(props);
+     * hs.contacts.getByIds([123412313, 156729313]).then(response => console.log(response))
+     * @returns {Promise}
+     */
+    getByIds,
     /**
      * Get contact by email
      * @async
