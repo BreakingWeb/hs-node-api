@@ -20,6 +20,7 @@ import contactsListsApi from './entities/contacts-lists';
 import emailSubscriptionsApi from './entities/email-subscriptions';
 import associationsApi from './entities/associations';
 import objectsApi from './entities/objects';
+import ownersApi from './entities/owners';
 
 /**
 * HubSpotClient class
@@ -214,6 +215,14 @@ class HubSpotClient {
    */
   get objects() {
     return objectsApi(this.props);
+  }
+
+  /**
+   * A collection of methods related to the owners API
+   * @namespace hs/owners
+   */
+  get owners() {
+    return ownersApi(this.props);
   }
 
 

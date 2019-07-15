@@ -124,6 +124,9 @@ export default {
       contacts: `${defaultApiHost}/companies/v2/companies/{companyId}/contacts`,
       byDomain: `${defaultApiHost}/companies/v2/domains/{domain}/companies`
     },
+    owners: {
+      byId: `${defaultApiHost}/owners/v2/owners/{ownerId}`,
+    },
     workflows: {
       eventLogs: `${defaultApiHost}/automation/v3/logevents/workflows/{workflowId}/filter`,
       enrollments: `${defaultApiHost}/automation/v2/workflows/enrollments/contacts/{id}`,
