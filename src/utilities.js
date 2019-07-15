@@ -1,5 +1,5 @@
 import qs from 'querystring';
-import request from 'request-promise';
+import axios from 'axios';
 
 const debugApp = require('debug')('hubspot-api:utilities');
 
@@ -63,14 +63,25 @@ export default async function createRequest(uri, options, props = {}) {
     debugApp(`url: ${url}`);
     const method = options.method || 'GET';
     debugApp(`${method}: ${url}`);
-    const headers = {};
+    const headers = {
+      ...options.headers,
+    };
     const timeout = 30000;
-    const json = options.body || true;
+    let data;
     if (props.accessToken) {
       Object.assign(headers, { Authorization: `Bearer ${props.accessToken}` });
     }
-    const response = await request({ url, method, headers, timeout, json });
-    return Promise.resolve(response);
+
+    if (options.data) {
+      data = options.data;
+    }
+
+    if (options.body) {
+      data = options.body;
+    }
+
+    const response = await axios({ url, method, headers, timeout, data });
+    return Promise.resolve(response.data);
   } catch (e) {
     return Promise.reject(e);
   }
