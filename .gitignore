@@ -4,7 +4,6 @@ build/
 lib/
 package-lock.json
 yarn.lock
-dist/
 .env
 sandbox*
 test.js
