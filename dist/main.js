@@ -7497,7 +7497,7 @@ var _baseOptions$16 = void 0;
 var create$1 = function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
     var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var mergedProps, engagement, associations, metadata, method, url, body, options, result;
+    var mergedProps, method, url, body, options, result;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -7506,29 +7506,28 @@ var create$1 = function () {
 
             requiresAuthentication(_baseOptions$16);
             mergedProps = _Object$assign({}, defaults$16, _baseOptions$16);
-            engagement = opts.engagement, associations = opts.associations, metadata = opts.metadata;
             method = 'POST';
             url = constants.api.engagements.create;
-            body = { engagement: engagement, associations: associations, metadata: metadata };
+            body = _extends({}, opts);
             options = { method: method, body: body };
-            _context.next = 10;
+            _context.next = 9;
             return createRequest(url, options, mergedProps);
 
-          case 10:
+          case 9:
             result = _context.sent;
             return _context.abrupt('return', _Promise.resolve(result));
 
-          case 14:
-            _context.prev = 14;
+          case 13:
+            _context.prev = 13;
             _context.t0 = _context['catch'](0);
             return _context.abrupt('return', _Promise.reject(_context.t0.message));
 
-          case 17:
+          case 16:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, _this$16, [[0, 14]]);
+    }, _callee, _this$16, [[0, 13]]);
   }));
 
   return function create() {

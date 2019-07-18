@@ -8,11 +8,10 @@ const create = async (opts = {}) => {
   try {
     requiresAuthentication(_baseOptions);
     const mergedProps = Object.assign({}, defaults, _baseOptions);
-    const { engagement, associations, metadata } = opts;
 
     const method = 'POST';
     const url = constants.api.engagements.create;
-    const body = { engagement, associations, metadata };
+    const body = { ...opts };
     const options = { method, body };
     const result = await createRequest(url, options, mergedProps);
     return Promise.resolve(result);
