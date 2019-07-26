@@ -13,7 +13,6 @@ const create = async (opts = {}) => {
     const url = constants.api.engagements.create;
     const body = { ...opts };
     const options = { method, body };
-    console.log('*** create engagment', JSON.stringify(body));
     const result = await createRequest(url, options, mergedProps);
     return Promise.resolve(result);
   } catch (e) {
