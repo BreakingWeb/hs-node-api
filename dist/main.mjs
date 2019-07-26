@@ -7506,24 +7506,26 @@ var create$1 = function () {
             url = constants.api.engagements.create;
             body = _extends({}, opts);
             options = { method: method, body: body };
-            _context.next = 9;
+
+            console.log('*** create engagment', _JSON$stringify(body));
+            _context.next = 10;
             return createRequest(url, options, mergedProps);
 
-          case 9:
+          case 10:
             result = _context.sent;
             return _context.abrupt('return', _Promise.resolve(result));
 
-          case 13:
-            _context.prev = 13;
+          case 14:
+            _context.prev = 14;
             _context.t0 = _context['catch'](0);
             return _context.abrupt('return', _Promise.reject(_context.t0.message));
 
-          case 16:
+          case 17:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, _this$16, [[0, 13]]);
+    }, _callee, _this$16, [[0, 14]]);
   }));
 
   return function create() {
