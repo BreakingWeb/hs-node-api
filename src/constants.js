@@ -32,6 +32,10 @@ export default {
       update: `${defaultApiHost}/deals/v1/deal/{id}`,
       batchUpdate: `${defaultApiHost}/deals/v1/batch-async/update`
     },
+    products: {
+      getAll: `${defaultApiHost}/crm-objects/v1/objects/products/paged`,
+      batchDelete: `${defaultApiHost}/crm-objects/v1/objects/products/batch-delete`
+    },
     emailEvents: {
       campaignsWithRecentActivity: `${defaultApiHost}/email/public/v1/campaigns`,
       campaign: `${defaultApiHost}/email/public/v1/campaigns/{campaignId}`
