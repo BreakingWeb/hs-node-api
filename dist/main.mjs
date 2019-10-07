@@ -191,6 +191,10 @@ var constants = {
       update: defaultApiHost + '/deals/v1/deal/{id}',
       batchUpdate: defaultApiHost + '/deals/v1/batch-async/update'
     },
+    products: {
+      getAll: defaultApiHost + '/crm-objects/v1/objects/products/paged',
+      batchDelete: defaultApiHost + '/crm-objects/v1/objects/products/batch-delete'
+    },
     emailEvents: {
       campaignsWithRecentActivity: defaultApiHost + '/email/public/v1/campaigns',
       campaign: defaultApiHost + '/email/public/v1/campaigns/{campaignId}'
@@ -8058,6 +8062,129 @@ function owners(baseOptions) {
   };
 }
 
+var _this$23 = undefined;
+
+var defaults$22 = {};
+var _baseOptions$22 = void 0;
+
+var getAll$3 = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var limit, offset, properties, propertiesWithHistory, allowedProps, mergedProps, allProducts;
+    return _regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+
+            requiresAuthentication(_baseOptions$22);
+            limit = opts.limit, offset = opts.offset, properties = opts.properties, propertiesWithHistory = opts.propertiesWithHistory;
+            allowedProps = { limit: limit, offset: offset, properties: properties, propertiesWithHistory: propertiesWithHistory };
+            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22, allowedProps);
+            _context.next = 7;
+            return createRequest(constants.api.products.getAll, {}, mergedProps);
+
+          case 7:
+            allProducts = _context.sent;
+            return _context.abrupt('return', _Promise.resolve(allProducts));
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context['catch'](0);
+            return _context.abrupt('return', _Promise.reject(_context.t0.message));
+
+          case 14:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, _this$23, [[0, 11]]);
+  }));
+
+  return function getAll() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var batchDelete = function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(deletes) {
+    var mergedProps, method, url;
+    return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+
+            requiresAuthentication(_baseOptions$22);
+            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22);
+            method = 'POST';
+            url = constants.api.products.batchDelete;
+            _context2.next = 7;
+            return createRequest(url, { method: method, body: { ids: deletes } }, mergedProps);
+
+          case 7:
+            return _context2.abrupt('return', _Promise.resolve({ deleted: true }));
+
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2['catch'](0);
+            return _context2.abrupt('return', _Promise.reject(_context2.t0.message));
+
+          case 13:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, _this$23, [[0, 10]]);
+  }));
+
+  return function batchDelete(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+function products(baseOptions) {
+  _baseOptions$22 = baseOptions;
+
+  return {
+    /**
+     * Get all products
+     * @async
+     * @memberof hs/products
+     * @method getAll
+     * @param {object} opts
+     * @example
+     * const hs = new HubspotClient(props);
+     * hs.products.getAll({
+     *   limit: 2,
+     *   offset: 12356,
+     *   properties: ['dealname', 'pipeline'],
+     *   propertiesWithHistory: ['dealstage']
+     * }).then(response => console.log(response));
+     * @property {int} opts.limit
+     * @property {int} opts.offset
+     * @property {array} opts.properties
+     * @property {array} opts.propertiesWithHistory
+     * @returns {Promise}
+     */
+    getAll: getAll$3,
+    /**
+     * Delete a group of products
+     * @async
+     * @memberof hs/products
+     * @method batchDelete
+     * @param {array} delete Array of objects. objectId corresponds with a productId. See Example below.
+     * @example
+     * const hs = new HubspotClient(props);
+     * const delete = [1642813, 1645205]);
+     * hs.products.batchDelete(delete).then(response => console.log(response));
+     * @returns {Promise}
+     * If successful the promise will resolve with { deleted: true }. Otherwise the promise will resolve with an error message.
+     */
+    batchDelete: batchDelete
+  };
+}
+
 /**
 * HubSpotClient class
 * @example
@@ -8331,6 +8458,17 @@ var HubSpotClient = function () {
     key: 'owners',
     get: function get() {
       return owners(this.props);
+    }
+
+    /**
+     * A collection of methods related to the products API
+     * @namespace hs/owners
+     */
+
+  }, {
+    key: 'products',
+    get: function get() {
+      return products(this.props);
     }
   }]);
 
