@@ -122,6 +122,7 @@ export default {
       getAllContactsProperties: `${defaultApiHost}/properties/v1/contacts/properties`
     },
     company: {
+      getAll: `${defaultApiHost}/companies/v2/companies/paged`,
       create: `${defaultApiHost}/companies/v2/companies/`,
       batchUpdate: `${defaultApiHost}/companies/v1/batch-async/update`,
       byId: `${defaultApiHost}/companies/v2/companies/{companyId}`,

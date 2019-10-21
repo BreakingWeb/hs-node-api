@@ -287,6 +287,7 @@ var constants = {
       getAllContactsProperties: defaultApiHost + '/properties/v1/contacts/properties'
     },
     company: {
+      getAll: defaultApiHost + '/companies/v2/companies/paged',
       create: defaultApiHost + '/companies/v2/companies/',
       batchUpdate: defaultApiHost + '/companies/v1/batch-async/update',
       byId: defaultApiHost + '/companies/v2/companies/{companyId}',
@@ -1178,14 +1179,53 @@ var _baseOptions$3 = void 0;
 
 // await hs.company.create({ name: 'Hubspot', no_of_employees: 1000 })
 
-var create = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(properties) {
-    var method, body, response;
+var getAll = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var limit, offset, properties, propertiesWithHistory, allowedProps, mergedProps, allCompanies;
     return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
+
+            requiresAuthentication(_baseOptions$3);
+            limit = opts.limit, offset = opts.offset, properties = opts.properties, propertiesWithHistory = opts.propertiesWithHistory;
+            allowedProps = { limit: limit, offset: offset, properties: properties, propertiesWithHistory: propertiesWithHistory };
+            mergedProps = _Object$assign({}, defaults$3, _baseOptions$3, allowedProps);
+            _context.next = 7;
+            return createRequest(constants.api.company.getAll, {}, mergedProps);
+
+          case 7:
+            allCompanies = _context.sent;
+            return _context.abrupt('return', _Promise.resolve(allCompanies));
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context['catch'](0);
+            return _context.abrupt('return', _Promise.reject(_context.t0.message));
+
+          case 14:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, _this$3, [[0, 11]]);
+  }));
+
+  return function getAll() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var create = function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(properties) {
+    var method, body, response;
+    return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
 
             requiresAuthentication(_baseOptions$3);
             method = 'POST';
@@ -1197,44 +1237,44 @@ var create = function () {
                 };
               })
             };
-            _context.next = 6;
+            _context2.next = 6;
             return createRequest(constants.api.company.create, { method: method, body: body }, _baseOptions$3);
 
           case 6:
-            response = _context.sent;
-            return _context.abrupt('return', _Promise.resolve(response));
+            response = _context2.sent;
+            return _context2.abrupt('return', _Promise.resolve(response));
 
           case 10:
-            _context.prev = 10;
-            _context.t0 = _context['catch'](0);
-            return _context.abrupt('return', _Promise.reject(_context.t0.message));
+            _context2.prev = 10;
+            _context2.t0 = _context2['catch'](0);
+            return _context2.abrupt('return', _Promise.reject(_context2.t0.message));
 
           case 13:
           case 'end':
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, _this$3, [[0, 10]]);
+    }, _callee2, _this$3, [[0, 10]]);
   }));
 
-  return function create(_x) {
-    return _ref.apply(this, arguments);
+  return function create(_x2) {
+    return _ref2.apply(this, arguments);
   };
 }();
 
 var update = function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(companyId, properties) {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(companyId, properties) {
     var method, body, response;
-    return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return _regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            _context2.prev = 0;
+            _context3.prev = 0;
 
             requiresAuthentication(_baseOptions$3);
 
             if (companyId) {
-              _context2.next = 4;
+              _context3.next = 4;
               break;
             }
 
@@ -1250,39 +1290,39 @@ var update = function () {
                 };
               })
             };
-            _context2.next = 8;
+            _context3.next = 8;
             return createRequest(constants.api.company.byId, { method: method, body: body, companyId: companyId }, _baseOptions$3);
 
           case 8:
-            response = _context2.sent;
-            return _context2.abrupt('return', _Promise.resolve(response));
+            response = _context3.sent;
+            return _context3.abrupt('return', _Promise.resolve(response));
 
           case 12:
-            _context2.prev = 12;
-            _context2.t0 = _context2['catch'](0);
-            return _context2.abrupt('return', _Promise.reject(_context2.t0.message));
+            _context3.prev = 12;
+            _context3.t0 = _context3['catch'](0);
+            return _context3.abrupt('return', _Promise.reject(_context3.t0.message));
 
           case 15:
           case 'end':
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, _this$3, [[0, 12]]);
+    }, _callee3, _this$3, [[0, 12]]);
   }));
 
-  return function update(_x2, _x3) {
-    return _ref2.apply(this, arguments);
+  return function update(_x3, _x4) {
+    return _ref3.apply(this, arguments);
   };
 }();
 
 var batchUpdate = function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(options) {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(options) {
     var method, body;
-    return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return _regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context3.prev = 0;
+            _context4.prev = 0;
 
             requiresAuthentication(_baseOptions$3);
             method = 'POST';
@@ -1298,52 +1338,16 @@ var batchUpdate = function () {
                 properties: properties
               };
             });
-            _context3.next = 6;
+            _context4.next = 6;
             return createRequest(constants.api.company.batchUpdate, { method: method, body: body }, _baseOptions$3);
 
           case 6:
-            return _context3.abrupt('return', _Promise.resolve({ msg: 'Successfully updated company properties' }));
-
-          case 9:
-            _context3.prev = 9;
-            _context3.t0 = _context3['catch'](0);
-            return _context3.abrupt('return', _Promise.reject(_context3.t0));
-
-          case 12:
-          case 'end':
-            return _context3.stop();
-        }
-      }
-    }, _callee3, _this$3, [[0, 9]]);
-  }));
-
-  return function batchUpdate(_x4) {
-    return _ref3.apply(this, arguments);
-  };
-}();
-
-var deleteCompany = function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(companyId) {
-    var method, response;
-    return _regeneratorRuntime.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-
-            requiresAuthentication(_baseOptions$3);
-            method = 'DELETE';
-            _context4.next = 5;
-            return createRequest(constants.api.company.byId, { method: method, companyId: companyId }, _baseOptions$3);
-
-          case 5:
-            response = _context4.sent;
-            return _context4.abrupt('return', _Promise.resolve(response));
+            return _context4.abrupt('return', _Promise.resolve({ msg: 'Successfully updated company properties' }));
 
           case 9:
             _context4.prev = 9;
             _context4.t0 = _context4['catch'](0);
-            return _context4.abrupt('return', _Promise.reject(_context4.t0.message));
+            return _context4.abrupt('return', _Promise.reject(_context4.t0));
 
           case 12:
           case 'end':
@@ -1353,14 +1357,14 @@ var deleteCompany = function () {
     }, _callee4, _this$3, [[0, 9]]);
   }));
 
-  return function deleteCompany(_x5) {
+  return function batchUpdate(_x5) {
     return _ref4.apply(this, arguments);
   };
 }();
 
-var getAll = function () {
-  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(props) {
-    var method, passedProps, limit, offset, properties, propertiesWithHistory, mergedProps, companies;
+var deleteCompany = function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(companyId) {
+    var method, response;
     return _regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
@@ -1368,39 +1372,28 @@ var getAll = function () {
             _context5.prev = 0;
 
             requiresAuthentication(_baseOptions$3);
-            method = 'GET';
-            passedProps = props || {};
-            limit = passedProps.limit, offset = passedProps.offset, properties = passedProps.properties, propertiesWithHistory = passedProps.propertiesWithHistory;
-            mergedProps = _Object$assign({}, defaults$3, _baseOptions$3, {
-              limit: limit,
-              offset: offset,
-              properties: properties,
-              propertiesWithHistory: propertiesWithHistory
-            });
+            method = 'DELETE';
+            _context5.next = 5;
+            return createRequest(constants.api.company.byId, { method: method, companyId: companyId }, _baseOptions$3);
 
-            mergedProps = sanitizeObject(mergedProps);
-
-            _context5.next = 9;
-            return createRequest(constants.api.company.byId, { method: method, companyId: 'paged' }, mergedProps);
+          case 5:
+            response = _context5.sent;
+            return _context5.abrupt('return', _Promise.resolve(response));
 
           case 9:
-            companies = _context5.sent;
-            return _context5.abrupt('return', _Promise.resolve(companies));
-
-          case 13:
-            _context5.prev = 13;
+            _context5.prev = 9;
             _context5.t0 = _context5['catch'](0);
             return _context5.abrupt('return', _Promise.reject(_context5.t0.message));
 
-          case 16:
+          case 12:
           case 'end':
             return _context5.stop();
         }
       }
-    }, _callee5, _this$3, [[0, 13]]);
+    }, _callee5, _this$3, [[0, 9]]);
   }));
 
-  return function getAll(_x6) {
+  return function deleteCompany(_x6) {
     return _ref5.apply(this, arguments);
   };
 }();

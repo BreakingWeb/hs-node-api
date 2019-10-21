@@ -12,6 +12,26 @@ let _baseOptions;
 
 // await hs.company.create({ name: 'Hubspot', no_of_employees: 1000 })
 
+const getAll = async (opts = {}) => {
+  try {
+    requiresAuthentication(_baseOptions);
+    const { limit, offset, properties, propertiesWithHistory } = opts;
+
+    const allowedProps = { limit, offset, properties, propertiesWithHistory };
+    const mergedProps = Object.assign({}, defaults, _baseOptions, allowedProps);
+
+    const allCompanies = await createRequest(
+      constants.api.company.getAll,
+      {},
+      mergedProps
+    );
+
+    return Promise.resolve(allCompanies);
+  } catch (e) {
+    return Promise.reject(e.message);
+  }
+};
+
 const create = async properties => {
   try {
     requiresAuthentication(_baseOptions);
@@ -97,31 +117,6 @@ const deleteCompany = async companyId => {
       _baseOptions
     );
     return Promise.resolve(response);
-  } catch (e) {
-    return Promise.reject(e.message);
-  }
-};
-
-const getAll = async props => {
-  try {
-    requiresAuthentication(_baseOptions);
-    const method = 'GET';
-    const passedProps = props || {};
-    const { limit, offset, properties, propertiesWithHistory } = passedProps;
-    let mergedProps = Object.assign({}, defaults, _baseOptions, {
-      limit,
-      offset,
-      properties,
-      propertiesWithHistory
-    });
-    mergedProps = sanitizeObject(mergedProps);
-
-    const companies = await createRequest(
-      constants.api.company.byId,
-      { method, companyId: 'paged' },
-      mergedProps
-    );
-    return Promise.resolve(companies);
   } catch (e) {
     return Promise.reject(e.message);
   }
