@@ -37,6 +37,8 @@ export default {
       batchDelete: `${defaultApiHost}/crm-objects/v1/objects/products/batch-delete`,
       createProducts: `${defaultApiHost}/crm-objects/v1/objects/products/batch-create`,
       createProduct: `${defaultApiHost}/crm-objects/v1/objects/products`,
+      updateProducts: `${defaultApiHost}/crm-objects/v1/objects/products/batch-update`,
+
     },
     emailEvents: {
       campaignsWithRecentActivity: `${defaultApiHost}/email/public/v1/campaigns`,

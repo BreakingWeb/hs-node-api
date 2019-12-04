@@ -12,7 +12,7 @@ const createProducts = async newProducts => {
     const url = constants.api.products.createProducts;
 
     const body = newProducts.map(p => Object.keys(p).map(key => ({
-      property: key,
+      name: key,
       value: p[key]
     })));
 
@@ -31,9 +31,33 @@ const createProduct = async newProduct => {
     const url = constants.api.products.createProduct;
 
     const body = Object.keys(newProduct).map(key => ({
-      property: key,
+      name: key,
       value: newProduct[key]
     }));
+
+    await createRequest(url, { method, body }, mergedProps);
+    return Promise.resolve({ deleted: true });
+  } catch (e) {
+    return Promise.reject(e.message);
+  }
+};
+
+const updateProducts = async upProducts => {
+  try {
+    requiresAuthentication(_baseOptions);
+    const mergedProps = Object.assign({}, defaults, _baseOptions);
+    const method = 'POST';
+    const url = constants.api.products.updateProducts;
+
+    const body = upProducts.map(p => ({
+      ...p,
+      properties: Object.keys(p.properties).map(key => ({
+        name: key,
+        value: p.properties[key]
+      }))
+    }));
+
+    console.log(JSON.stringify(body));
 
     await createRequest(url, { method, body }, mergedProps);
     return Promise.resolve({ deleted: true });
@@ -81,6 +105,7 @@ export default function products(baseOptions) {
   return {
     createProduct,
     createProducts,
+    updateProducts,
     /**
      * Get all products
      * @async

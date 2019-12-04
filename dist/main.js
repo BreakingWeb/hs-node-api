@@ -199,7 +199,9 @@ var constants = {
       getAll: defaultApiHost + '/crm-objects/v1/objects/products/paged',
       batchDelete: defaultApiHost + '/crm-objects/v1/objects/products/batch-delete',
       createProducts: defaultApiHost + '/crm-objects/v1/objects/products/batch-create',
-      createProduct: defaultApiHost + '/crm-objects/v1/objects/products'
+      createProduct: defaultApiHost + '/crm-objects/v1/objects/products',
+      updateProducts: defaultApiHost + '/crm-objects/v1/objects/products/batch-update'
+
     },
     emailEvents: {
       campaignsWithRecentActivity: defaultApiHost + '/email/public/v1/campaigns',
@@ -8082,7 +8084,7 @@ var createProducts = function () {
             body = newProducts.map(function (p) {
               return _Object$keys(p).map(function (key) {
                 return {
-                  property: key,
+                  name: key,
                   value: p[key]
                 };
               });
@@ -8126,7 +8128,7 @@ var createProduct = function () {
             url = constants.api.products.createProduct;
             body = _Object$keys(newProduct).map(function (key) {
               return {
-                property: key,
+                name: key,
                 value: newProduct[key]
               };
             });
@@ -8154,10 +8156,9 @@ var createProduct = function () {
   };
 }();
 
-var getAll$3 = function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
-    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var limit, offset, properties, propertiesWithHistory, allowedProps, mergedProps, allProducts;
+var updateProducts = function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(upProducts) {
+    var mergedProps, method, url, body;
     return _regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -8165,37 +8166,51 @@ var getAll$3 = function () {
             _context3.prev = 0;
 
             requiresAuthentication(_baseOptions$22);
-            limit = opts.limit, offset = opts.offset, properties = opts.properties, propertiesWithHistory = opts.propertiesWithHistory;
-            allowedProps = { limit: limit, offset: offset, properties: properties, propertiesWithHistory: propertiesWithHistory };
-            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22, allowedProps);
-            _context3.next = 7;
-            return createRequest(constants.api.products.getAll, {}, mergedProps);
+            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22);
+            method = 'POST';
+            url = constants.api.products.updateProducts;
+            body = upProducts.map(function (p) {
+              return _extends({}, p, {
+                properties: _Object$keys(p.properties).map(function (key) {
+                  return {
+                    name: key,
+                    value: p.properties[key]
+                  };
+                })
+              });
+            });
 
-          case 7:
-            allProducts = _context3.sent;
-            return _context3.abrupt('return', _Promise.resolve(allProducts));
 
-          case 11:
-            _context3.prev = 11;
+            console.log(_JSON$stringify(body));
+
+            _context3.next = 9;
+            return createRequest(url, { method: method, body: body }, mergedProps);
+
+          case 9:
+            return _context3.abrupt('return', _Promise.resolve({ deleted: true }));
+
+          case 12:
+            _context3.prev = 12;
             _context3.t0 = _context3['catch'](0);
             return _context3.abrupt('return', _Promise.reject(_context3.t0.message));
 
-          case 14:
+          case 15:
           case 'end':
             return _context3.stop();
         }
       }
-    }, _callee3, _this$23, [[0, 11]]);
+    }, _callee3, _this$23, [[0, 12]]);
   }));
 
-  return function getAll() {
+  return function updateProducts(_x3) {
     return _ref3.apply(this, arguments);
   };
 }();
 
-var batchDelete = function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(deletes) {
-    var mergedProps, method, url;
+var getAll$3 = function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var limit, offset, properties, propertiesWithHistory, allowedProps, mergedProps, allProducts;
     return _regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
@@ -8203,30 +8218,68 @@ var batchDelete = function () {
             _context4.prev = 0;
 
             requiresAuthentication(_baseOptions$22);
-            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22);
-            method = 'POST';
-            url = constants.api.products.batchDelete;
+            limit = opts.limit, offset = opts.offset, properties = opts.properties, propertiesWithHistory = opts.propertiesWithHistory;
+            allowedProps = { limit: limit, offset: offset, properties: properties, propertiesWithHistory: propertiesWithHistory };
+            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22, allowedProps);
             _context4.next = 7;
-            return createRequest(url, { method: method, body: { ids: deletes } }, mergedProps);
+            return createRequest(constants.api.products.getAll, {}, mergedProps);
 
           case 7:
-            return _context4.abrupt('return', _Promise.resolve({ deleted: true }));
+            allProducts = _context4.sent;
+            return _context4.abrupt('return', _Promise.resolve(allProducts));
 
-          case 10:
-            _context4.prev = 10;
+          case 11:
+            _context4.prev = 11;
             _context4.t0 = _context4['catch'](0);
             return _context4.abrupt('return', _Promise.reject(_context4.t0.message));
 
-          case 13:
+          case 14:
           case 'end':
             return _context4.stop();
         }
       }
-    }, _callee4, _this$23, [[0, 10]]);
+    }, _callee4, _this$23, [[0, 11]]);
   }));
 
-  return function batchDelete(_x4) {
+  return function getAll() {
     return _ref4.apply(this, arguments);
+  };
+}();
+
+var batchDelete = function () {
+  var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(deletes) {
+    var mergedProps, method, url;
+    return _regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+
+            requiresAuthentication(_baseOptions$22);
+            mergedProps = _Object$assign({}, defaults$22, _baseOptions$22);
+            method = 'POST';
+            url = constants.api.products.batchDelete;
+            _context5.next = 7;
+            return createRequest(url, { method: method, body: { ids: deletes } }, mergedProps);
+
+          case 7:
+            return _context5.abrupt('return', _Promise.resolve({ deleted: true }));
+
+          case 10:
+            _context5.prev = 10;
+            _context5.t0 = _context5['catch'](0);
+            return _context5.abrupt('return', _Promise.reject(_context5.t0.message));
+
+          case 13:
+          case 'end':
+            return _context5.stop();
+        }
+      }
+    }, _callee5, _this$23, [[0, 10]]);
+  }));
+
+  return function batchDelete(_x5) {
+    return _ref5.apply(this, arguments);
   };
 }();
 
@@ -8236,6 +8289,7 @@ function products(baseOptions) {
   return {
     createProduct: createProduct,
     createProducts: createProducts,
+    updateProducts: updateProducts,
     /**
      * Get all products
      * @async
