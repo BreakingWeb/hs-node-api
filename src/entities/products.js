@@ -4,6 +4,44 @@ import constants from '../constants';
 const defaults = {};
 let _baseOptions;
 
+const createProducts = async newProducts => {
+  try {
+    requiresAuthentication(_baseOptions);
+    const mergedProps = Object.assign({}, defaults, _baseOptions);
+    const method = 'POST';
+    const url = constants.api.products.createProducts;
+
+    const body = newProducts.map(p => Object.keys(p).map(key => ({
+      property: key,
+      value: p[key]
+    })));
+
+    await createRequest(url, { method, body }, mergedProps);
+    return Promise.resolve({ deleted: true });
+  } catch (e) {
+    return Promise.reject(e.message);
+  }
+};
+
+const createProduct = async newProduct => {
+  try {
+    requiresAuthentication(_baseOptions);
+    const mergedProps = Object.assign({}, defaults, _baseOptions);
+    const method = 'POST';
+    const url = constants.api.products.createProduct;
+
+    const body = Object.keys(newProduct).map(key => ({
+      property: key,
+      value: newProduct[key]
+    }));
+
+    await createRequest(url, { method, body }, mergedProps);
+    return Promise.resolve({ deleted: true });
+  } catch (e) {
+    return Promise.reject(e.message);
+  }
+};
+
 const getAll = async (opts = {}) => {
   try {
     requiresAuthentication(_baseOptions);
@@ -41,6 +79,8 @@ export default function products(baseOptions) {
   _baseOptions = baseOptions;
 
   return {
+    createProduct,
+    createProducts,
     /**
      * Get all products
      * @async
