@@ -8255,27 +8255,23 @@ var updateProducts = function () {
                 })
               });
             });
-
-
-            console.log(JSON.stringify(body));
-
-            _context3.next = 9;
+            _context3.next = 8;
             return createRequest(url, { method: method, body: body }, mergedProps);
 
-          case 9:
+          case 8:
             return _context3.abrupt('return', Promise.resolve({ deleted: true }));
 
-          case 12:
-            _context3.prev = 12;
+          case 11:
+            _context3.prev = 11;
             _context3.t0 = _context3['catch'](0);
             return _context3.abrupt('return', Promise.reject(_context3.t0.message));
 
-          case 15:
+          case 14:
           case 'end':
             return _context3.stop();
         }
       }
-    }, _callee3, _this$23, [[0, 12]]);
+    }, _callee3, _this$23, [[0, 11]]);
   }));
 
   return function updateProducts(_x3) {

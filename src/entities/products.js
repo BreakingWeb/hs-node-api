@@ -57,8 +57,6 @@ const updateProducts = async upProducts => {
       }))
     }));
 
-    console.log(JSON.stringify(body));
-
     await createRequest(url, { method, body }, mergedProps);
     return Promise.resolve({ deleted: true });
   } catch (e) {
