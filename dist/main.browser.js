@@ -8191,7 +8191,7 @@ var createProducts = function () {
 
 var createProduct = function () {
   var _ref2 = asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(newProduct) {
-    var mergedProps, method, url, body;
+    var mergedProps, method, url, body, result;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -8212,19 +8212,20 @@ var createProduct = function () {
             return createRequest(url, { method: method, body: body }, mergedProps);
 
           case 8:
-            return _context2.abrupt('return', Promise.resolve({ deleted: true }));
+            result = _context2.sent;
+            return _context2.abrupt('return', Promise.resolve(result));
 
-          case 11:
-            _context2.prev = 11;
+          case 12:
+            _context2.prev = 12;
             _context2.t0 = _context2['catch'](0);
             return _context2.abrupt('return', Promise.reject(_context2.t0.message));
 
-          case 14:
+          case 15:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, _this$23, [[0, 11]]);
+    }, _callee2, _this$23, [[0, 12]]);
   }));
 
   return function createProduct(_x2) {
