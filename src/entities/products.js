@@ -35,8 +35,8 @@ const createProduct = async newProduct => {
       value: newProduct[key]
     }));
 
-    await createRequest(url, { method, body }, mergedProps);
-    return Promise.resolve({ deleted: true });
+    const result = await createRequest(url, { method, body }, mergedProps);
+    return Promise.resolve(result);
   } catch (e) {
     return Promise.reject(e.message);
   }
