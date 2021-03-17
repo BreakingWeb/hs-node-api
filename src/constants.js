@@ -8,7 +8,7 @@ export default {
     },
     files: {
       getFilesInFolder: `${defaultApiHost}/filemanager/api/v2/files`,
-      upload: `${defaultApiHost}/filemanager/api/v2/files`,
+      upload: `${defaultApiHost}/filemanager/api/v3/files/upload`,
     },
     pages: {
       create: `${defaultApiHost}/content/api/v2/pages`,

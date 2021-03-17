@@ -1,6 +1,8 @@
 import fs from 'fs';
 import FormData from 'form-data';
-import createRequest, { requiresAuthentication } from '../utilities';
+import createRequest, {
+  requiresAuthentication
+} from '../utilities';
 import constants from '../constants';
 
 const defaults = {};
@@ -9,7 +11,10 @@ let _baseOptions;
 const getFilesInFolder = async (folder_id, opts = {}) => {
   try {
     requiresAuthentication(_baseOptions);
-    let { limit, offset } = opts;
+    let {
+      limit,
+      offset
+    } = opts;
     limit = limit || 100;
     offset = offset || 0;
 
@@ -20,8 +25,7 @@ const getFilesInFolder = async (folder_id, opts = {}) => {
     });
 
     const files = await createRequest(
-      constants.api.files.getFilesInFolder,
-      {},
+      constants.api.files.getFilesInFolder, {},
       mergedProps
     );
     return Promise.resolve(files);
@@ -35,19 +39,25 @@ const uploadFile = async (opts = {}) => {
     const {
       overwrite,
       hidden,
-      file_names,
+      // file_names,
       files,
       folder_paths,
-      folder_id
+      // folder_id
     } = opts;
+
+    const fileOptions = {
+      access: 'PUBLIC_NOT_INDEXABLE',
+      overwrite: true,
+      duplicateValidationStrategy: 'NONE',
+      duplicateValidationScope: 'EXACT_FOLDER'
+    };
 
     const method = 'POST';
     const data = new FormData();
-    if (file_names) data.append('file_names', file_names);
-    if (folder_paths) data.append('folder_paths', folder_paths);
-    if (folder_id) data.append('folder_id', folder_id);
+    data.append('options', JSON.stringify(fileOptions));
+    data.append('folderPath', folder_paths);
 
-    data.append('files', fs.createReadStream(files), {
+    data.append('file', fs.createReadStream(files), {
       knownLength: fs.statSync(files).size,
       name: files,
     });
@@ -58,8 +68,7 @@ const uploadFile = async (opts = {}) => {
     });
 
     const author = await createRequest(
-      constants.api.files.upload,
-      {
+      constants.api.files.upload, {
         method,
         data,
         headers: {
