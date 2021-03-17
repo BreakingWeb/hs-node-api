@@ -173,7 +173,7 @@ var constants = {
     },
     files: {
       getFilesInFolder: defaultApiHost + '/filemanager/api/v2/files',
-      upload: defaultApiHost + '/filemanager/api/v2/files'
+      upload: defaultApiHost + '/filemanager/api/v3/files/upload'
     },
     pages: {
       create: defaultApiHost + '/content/api/v2/pages',
@@ -4812,21 +4812,26 @@ var getFilesInFolder = function () {
 var uploadFile = function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
     var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var overwrite, hidden, file_names, files, folder_paths, folder_id, method, data, mergedProps, author;
+    var overwrite, hidden, files, folder_paths, fileOptions, method, data, mergedProps, author;
     return _regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            overwrite = opts.overwrite, hidden = opts.hidden, file_names = opts.file_names, files = opts.files, folder_paths = opts.folder_paths, folder_id = opts.folder_id;
+            overwrite = opts.overwrite, hidden = opts.hidden, files = opts.files, folder_paths = opts.folder_paths;
+            fileOptions = {
+              access: 'PUBLIC_NOT_INDEXABLE',
+              overwrite: true,
+              duplicateValidationStrategy: 'NONE',
+              duplicateValidationScope: 'EXACT_FOLDER'
+            };
             method = 'POST';
             data = new FormData();
 
-            if (file_names) data.append('file_names', file_names);
-            if (folder_paths) data.append('folder_paths', folder_paths);
-            if (folder_id) data.append('folder_id', folder_id);
+            data.append('options', _JSON$stringify(fileOptions));
+            data.append('folderPath', folder_paths);
 
-            data.append('files', fs.createReadStream(files), {
+            data.append('file', fs.createReadStream(files), {
               knownLength: fs.statSync(files).size,
               name: files
             });
